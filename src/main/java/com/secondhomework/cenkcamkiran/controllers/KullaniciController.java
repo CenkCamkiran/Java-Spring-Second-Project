@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.secondhomework.DTO.KullaniciDTO;
 import com.secondhomework.cenkcamkiran.entities.Kullanici;
 import com.secondhomework.cenkcamkiran.exception.KullaniciException;
 import com.secondhomework.cenkcamkiran.filters.KullaniciFilter;
