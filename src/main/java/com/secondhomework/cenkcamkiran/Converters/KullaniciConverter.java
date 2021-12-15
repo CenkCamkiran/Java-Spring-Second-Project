@@ -1,9 +1,9 @@
-package com.secondhomework.Converters;
+package com.secondhomework.cenkcamkiran.Converters;
 
-import com.secondhomework.DTO.KullaniciDTO;
-import com.secondhomework.cenkcamkiran.entities.Urun;
+import com.secondhomework.cenkcamkiran.DTO.KullaniciDTO;
+import com.secondhomework.cenkcamkiran.entities.Kullanici;
+
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -12,7 +12,6 @@ public interface KullaniciConverter {
 
     KullaniciConverter INSTANCE = Mappers.getMapper(KullaniciConverter.class);
 
-    @Mapping(source = "kategoriId", target = "kategori.id")
-    Urun convertUrunDtoToUrun(KullaniciDTO urunDto);
+    Kullanici convertKullaniciDtoToKullanici(KullaniciDTO dto);
 
 }

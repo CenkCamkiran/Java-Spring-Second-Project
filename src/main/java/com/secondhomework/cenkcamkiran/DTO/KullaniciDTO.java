@@ -1,4 +1,4 @@
-package com.secondhomework.DTO;
+package com.secondhomework.cenkcamkiran.DTO;
 
 public class KullaniciDTO {
 

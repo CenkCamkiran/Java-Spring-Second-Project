@@ -1,20 +1,29 @@
 package com.secondhomework.cenkcamkiran.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.secondhomework.cenkcamkiran.Converters.KullaniciConverter;
+import com.secondhomework.cenkcamkiran.DTO.KullaniciDTO;
 import com.secondhomework.cenkcamkiran.entities.Kullanici;
 import com.secondhomework.cenkcamkiran.exception.KullaniciException;
 import com.secondhomework.cenkcamkiran.filters.KullaniciFilter;
 import com.secondhomework.cenkcamkiran.services.KullaniciService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/v1/kullanici")
@@ -36,6 +45,52 @@ public class KullaniciController implements KullaniciFilter {
         jacksonValue.setFilters(filter);
 
         return jacksonValue;
+    }
+
+    @DeleteMapping("")
+    public void DeleteKullaniciByTelefonAndKullaniciAdi(@RequestBody KullaniciDTO kullanici) {
+
+        try {
+            kullaniciService.DeleteKullaniciByTelefonAndKullaniciAdi(kullanici.getTelefon(), kullanici.getAdi());
+
+        } catch (Exception e) {
+            throw new KullaniciException(e.getMessage().toString());
+        }
+
+    }
+
+    @PutMapping("")
+    public ResponseEntity<Object> UpdateKullanici(@RequestBody KullaniciDTO kullaniciDTO) {
+
+        Kullanici kullanici = KullaniciConverter.INSTANCE.convertKullaniciDtoToKullanici(kullaniciDTO);
+
+        kullanici = kullaniciService.UpdateKullanici(kullanici);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("{id}")
+                .buildAndExpand(kullanici.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
+
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Object> SaveNewKullanici(@RequestBody KullaniciDTO kullaniciDTO) {
+
+        Kullanici kullanici = KullaniciConverter.INSTANCE.convertKullaniciDtoToKullanici(kullaniciDTO);
+
+        kullanici = kullaniciService.SaveNewKullanici(kullanici);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("{id}")
+                .buildAndExpand(kullanici.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
+
     }
 
     @GetMapping("/kullaniciAdi/{kullaniciadi}")

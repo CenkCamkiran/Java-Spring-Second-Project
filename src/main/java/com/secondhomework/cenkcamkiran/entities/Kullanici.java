@@ -1,5 +1,7 @@
 package com.secondhomework.cenkcamkiran.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,14 +10,16 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "KULLANICI")
 @JsonFilter("KullaniciFilter")
-public class Kullanici {
+public class Kullanici implements Serializable {
 
     @SequenceGenerator(name = "generator", sequenceName = "KULLANICI_ID_SEQ")
     @Id
+    @JsonIgnore
     @GeneratedValue(generator = "generator")
     @Column(name = "ID", nullable = false)
     private Long id;
@@ -85,8 +89,19 @@ public class Kullanici {
 
     @Override
     public String toString() {
-        return "Kullanici [adi=" + adi + ", email=" + email + ", id=" + id + ", kullaniciAdi=" + kullaniciadi
-                + ", soyadi=" + soyadi + ", telefon=" + telefon + "]";
+        return id == null ? "" : id.toString();
+    }
+
+    public Kullanici(Long id, String adi, String soyadi, String email, String telefon, String kullaniciadi) {
+        this.id = id;
+        this.adi = adi;
+        this.soyadi = soyadi;
+        this.email = email;
+        this.telefon = telefon;
+        this.kullaniciadi = kullaniciadi;
+    }
+
+    public Kullanici() {
     }
 
 }
