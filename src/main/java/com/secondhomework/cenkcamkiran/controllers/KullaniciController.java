@@ -48,14 +48,11 @@ public class KullaniciController implements KullaniciFilter {
     }
 
     @DeleteMapping("")
-    public void DeleteKullaniciByTelefonAndKullaniciAdi(@RequestBody KullaniciDTO kullanici) {
+    public void DeleteKullaniciByTelefonAndKullaniciAdi(@RequestBody KullaniciDTO kullaniciDto) {
 
-        try {
-            kullaniciService.DeleteKullaniciByTelefonAndKullaniciAdi(kullanici.getTelefon(), kullanici.getAdi());
+        Kullanici kullanici = KullaniciConverter.INSTANCE.convertKullaniciDtoToKullanici(kullaniciDto);
 
-        } catch (Exception e) {
-            throw new KullaniciException(e.getMessage().toString());
-        }
+        kullaniciService.DeleteKullaniciByTelefonAndKullaniciAdi(kullanici);
 
     }
 
@@ -64,12 +61,19 @@ public class KullaniciController implements KullaniciFilter {
 
         Kullanici kullanici = KullaniciConverter.INSTANCE.convertKullaniciDtoToKullanici(kullaniciDTO);
 
-        kullanici = kullaniciService.UpdateKullanici(kullanici);
+        Kullanici findKullanici = kullaniciService.GetKullaniciByKullaniciAdi(kullanici.getKullaniciadi());
+
+        if (findKullanici == null){
+            throw new KullaniciException("User not found with given kullaniciAdi: " + kullanici.getKullaniciadi());
+        }
+
+        kullanici.setId(findKullanici.getId());
+        kullaniciService.UpdateKullanici(kullanici);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
-                .buildAndExpand(kullanici.getId())
+                .path("/kullaniciAdi/{kullaniciadi}")
+                .buildAndExpand(findKullanici.getKullaniciadi())
                 .toUri();
 
         return ResponseEntity.created(uri).build();
@@ -85,8 +89,8 @@ public class KullaniciController implements KullaniciFilter {
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
-                .buildAndExpand(kullanici.getId())
+                .path("/kullaniciAdi/{kullaniciadi}")
+                .buildAndExpand(kullanici.getKullaniciadi())
                 .toUri();
 
         return ResponseEntity.created(uri).build();

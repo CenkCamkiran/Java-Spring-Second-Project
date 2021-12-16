@@ -2,7 +2,6 @@ package com.secondhomework.cenkcamkiran.services;
 
 import java.util.List;
 
-import com.secondhomework.cenkcamkiran.DTO.KullaniciDTO;
 import com.secondhomework.cenkcamkiran.entities.Kullanici;
 import com.secondhomework.cenkcamkiran.repository.KullaniciRepository;
 
@@ -20,9 +19,10 @@ public class KullaniciService {
         return kullaniciRepository.findAll();
     }
 
-    public void DeleteKullaniciByTelefonAndKullaniciAdi(String telefon, String kullaniciadi) {
+    public void DeleteKullaniciByTelefonAndKullaniciAdi(Kullanici kullanici) {
 
-        kullaniciRepository.deleteKullaniciByTelefonAndKullaniciAdi(telefon, kullaniciadi);
+        kullaniciRepository.deleteByTelefonAndKullaniciAdi(kullanici.getTelefon().toString(),
+                kullanici.getKullaniciadi().toString());
     }
 
     public Kullanici SaveNewKullanici(Kullanici kullanici) {
@@ -33,12 +33,14 @@ public class KullaniciService {
         return kullaniciRepository.save(kullanici);
     }
 
-    public Kullanici UpdateKullanici(Kullanici kullanici) {
+    public void UpdateKullanici(Kullanici kullanici) {
 
         // return kullaniciRepository.saveNewKullanici(kullanici.getAdi(),
         // kullanici.getSoyadi(), kullanici.getEmail(),
         // kullanici.getTelefon(), kullanici.getKullaniciadi());
-        return kullaniciRepository.save(kullanici);
+        kullaniciRepository.updateKullanici(kullanici.getAdi().toString(),
+                kullanici.getSoyadi().toString(), kullanici.getEmail().toString(),
+                kullanici.getTelefon().toString(), kullanici.getKullaniciadi().toString(), kullanici.getId());
     }
 
     public Kullanici GetKullaniciByKullaniciAdi(String kullaniciadi) {

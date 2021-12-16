@@ -17,9 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @JsonFilter("KullaniciFilter")
 public class Kullanici implements Serializable {
 
-    @SequenceGenerator(name = "generator", sequenceName = "KULLANICI_ID_SEQ")
+    @SequenceGenerator(name = "generator", sequenceName = "KULLANICI_ID_SEQ", initialValue = 1, allocationSize = 1)
     @Id
-    @JsonIgnore
     @GeneratedValue(generator = "generator")
     @Column(name = "ID", nullable = false)
     private Long id;
