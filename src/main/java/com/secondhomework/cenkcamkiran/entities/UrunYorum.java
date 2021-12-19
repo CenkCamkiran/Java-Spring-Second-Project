@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "URUNYORUM")
 public class UrunYorum {
 
-    @SequenceGenerator(name = "generator", sequenceName = "YORUM_ID_SEQ")
+    @SequenceGenerator(name = "generator", sequenceName = "YORUM_ID_SEQ", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "generator")
     @Id
     @Column(name = "ID", nullable = false)
@@ -17,7 +17,7 @@ public class UrunYorum {
     @Column(name = "YORUM", nullable = false)
     private String yorum;
 
-    @Column(name = "YORUMTARIHI", nullable = false)
+    @Column(name = "YORUMTARIHI", nullable = true)
     private Date yorum_tarihi;
 
     @ManyToOne(fetch = FetchType.LAZY)

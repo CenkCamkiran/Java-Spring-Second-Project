@@ -4,58 +4,52 @@ import java.util.Date;
 
 public class YorumDTO {
 
-    private Long id;
     private String yorum;
-    private Date yorumTarihi;
-    private Long urunID;
-    private Date kullaniciId;
+    private Date yorum_tarihi;
+    private Long urun_id;
+    private Long kullanici_id;
 
-    public YorumDTO(Long id, String yorum, Date yorumTarihi, Long urunID, Date kullaniciId) {
-        this.id = id;
-        this.yorum = yorum;
-        this.yorumTarihi = yorumTarihi;
-        this.urunID = urunID;
-        this.kullaniciId = kullaniciId;
-    }
+	public YorumDTO(String yorum, Date yorum_tarihi, Long urun_id, Long kullanici_id) {
+		super();
+		this.yorum = yorum;
+		this.yorum_tarihi = yorum_tarihi;
+		this.urun_id = urun_id;
+		this.kullanici_id = kullanici_id;
+	}
+	
+	public String getYorum() {
+		return yorum;
+	}
+	
+	public void setYorum(String yorum) {
+		this.yorum = yorum;
+	}
+	
+	public Date getYorum_tarihi() {
+		return yorum_tarihi;
+	}
+	
+	public void setYorum_tarihi(Date yorum_tarihi) {
+		this.yorum_tarihi = yorum_tarihi;
+	}
+	
+	public Long getUrun_id() {
+		return urun_id;
+	}
+	
+	public void setUrun_id(Long urun_id) {
+		this.urun_id = urun_id;
+	}
+	
+	public Long getKullanici_id() {
+		return kullanici_id;
+	}
+	
+	public void setKullanici_id(Long kullanici_id) {
+		this.kullanici_id = kullanici_id;
+	}
+    
+    
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getYorum() {
-        return yorum;
-    }
-
-    public void setYorum(String yorum) {
-        this.yorum = yorum;
-    }
-
-    public Date getYorumTarihi() {
-        return yorumTarihi;
-    }
-
-    public void setYorumTarihi(Date yorumTarihi) {
-        this.yorumTarihi = yorumTarihi;
-    }
-
-    public Long getUrunID() {
-        return urunID;
-    }
-
-    public void setUrunID(Long urunID) {
-        this.urunID = urunID;
-    }
-
-    public Date getKullaniciId() {
-        return kullaniciId;
-    }
-
-    public void setKullaniciId(Date kullaniciId) {
-        this.kullaniciId = kullaniciId;
-    }
 
 }

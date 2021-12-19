@@ -19,9 +19,9 @@ public class KullaniciService {
         return kullaniciRepository.findAll();
     }
 
-    public void DeleteKullaniciByTelefonAndKullaniciAdi(Kullanici kullanici) {
+    public int DeleteKullaniciByTelefonAndKullaniciAdi(Kullanici kullanici) {
 
-        kullaniciRepository.deleteByTelefonAndKullaniciAdi(kullanici.getTelefon().toString(),
+        return kullaniciRepository.deleteByTelefonAndKullaniciAdi(kullanici.getTelefon().toString(),
                 kullanici.getKullaniciadi().toString());
     }
 

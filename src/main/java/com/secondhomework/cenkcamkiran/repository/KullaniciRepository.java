@@ -24,14 +24,14 @@ public interface KullaniciRepository extends CrudRepository<Kullanici, Long> {
     @Modifying
     @Transactional
     @Query(value = "update kullanici set adi = :adi, soyadi = :soyadi, email = :email, telefon = :telefon, kullaniciadi = :kullaniciadi where id = :id", nativeQuery = true)
-    void updateKullanici(@Param("adi") String adi, @Param("soyadi") String soyadi, 
-    @Param("email") String email, @Param("telefon") String telefon, 
-    @Param("kullaniciadi") String kullaniciadi, @Param("id") Long id);
+    void updateKullanici(@Param("adi") String adi, @Param("soyadi") String soyadi,
+            @Param("email") String email, @Param("telefon") String telefon,
+            @Param("kullaniciadi") String kullaniciadi, @Param("id") Long id);
 
     @Modifying
     @Transactional
     @Query(value = "delete from Kullanici kullanici where kullanici.telefon=:telefon and kullanici.kullaniciadi=:kullaniciadi", nativeQuery = true)
-    void deleteByTelefonAndKullaniciAdi(@Param("telefon") String telefon, 
-    @Param("kullaniciadi") String adi);
+    int deleteByTelefonAndKullaniciAdi(@Param("telefon") String telefon,
+            @Param("kullaniciadi") String adi);
 
 }

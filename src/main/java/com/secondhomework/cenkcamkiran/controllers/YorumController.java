@@ -8,11 +8,15 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.secondhomework.cenkcamkiran.Converters.KullaniciConverter;
 import com.secondhomework.cenkcamkiran.Converters.YorumConverter;
 import com.secondhomework.cenkcamkiran.DTO.KullaniciYorumDTO;
+import com.secondhomework.cenkcamkiran.DTO.UrunYorumDTO;
 import com.secondhomework.cenkcamkiran.DTO.YorumDTO;
 import com.secondhomework.cenkcamkiran.entities.Kullanici;
 import com.secondhomework.cenkcamkiran.entities.UrunYorum;
+import com.secondhomework.cenkcamkiran.exception.KullaniciException;
+import com.secondhomework.cenkcamkiran.exception.UrunException;
 import com.secondhomework.cenkcamkiran.exception.YorumException;
 import com.secondhomework.cenkcamkiran.filters.YorumFilter;
+import com.secondhomework.cenkcamkiran.services.KullaniciService;
 import com.secondhomework.cenkcamkiran.services.YorumService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +37,42 @@ public class YorumController implements YorumFilter {
     @Autowired
     private YorumService yorumService;
 
-    @GetMapping("/kullaniciAdi/{kullaniciadi}")
-    public List<KullaniciYorumDTO> GetYorumlarByKullaniciAdi(@PathVariable String kullaniciadi) {
+    @Autowired
+    private KullaniciService kullaniciService;
 
-        List<KullaniciYorumDTO> kullaniciYorumDTO = yorumService
-                .findYorumByKullaniciAdi(kullaniciadi);
+    @GetMapping("/kullaniciAdi/{kullaniciAdi}")
+    public List<UrunYorumDTO> GetYorumlarByKullaniciAdi(@PathVariable String kullaniciAdi) {
 
-        if (kullaniciYorumDTO == null) {
-            throw new YorumException(kullaniciadi + " kullanıcı henüz bir yorum yazmamıştır.");
+        Kullanici kullanici = kullaniciService.GetKullaniciByKullaniciAdi(kullaniciAdi);
+
+        if (kullanici == null) {
+            throw new KullaniciException("İlgili kullanıcı bulunamamıştır: " + kullaniciAdi);
         }
 
-        return kullaniciYorumDTO;
+        List<UrunYorum> urunYorums = yorumService.findYorumlarByKullaniciAdi(kullanici.getId());
+
+        if (urunYorums == null || urunYorums.size() == 0) {
+            throw new UrunException(kullanici.getKullaniciadi() + " henüz bir yorum yazmamıştır.");
+        }
+
+        List<UrunYorumDTO> urunYorumDTOs = YorumConverter.INSTANCE.convertUrunYorumToUrunYorumDto(urunYorums);
+
+        return urunYorumDTOs;
+
+    }
+
+    @GetMapping("/urunid/{id}")
+    public List<UrunYorumDTO> GetYorumlarByUrunId(@PathVariable Long id) {
+
+        List<UrunYorum> urunYorum = yorumService.findYorumlarByUrunId(id);
+
+        if (urunYorum == null || urunYorum.size() == 0) {
+            throw new UrunException(String.valueOf(id) + " id li ürüne henüz bir yorum yapılmamıştır.");
+        }
+
+        List<UrunYorumDTO> urunYorumDTOs = YorumConverter.INSTANCE.convertUrunYorumToUrunYorumDto(urunYorum);
+
+        return urunYorumDTOs;
 
     }
 

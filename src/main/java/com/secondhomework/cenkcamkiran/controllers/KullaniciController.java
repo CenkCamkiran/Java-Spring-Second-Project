@@ -48,11 +48,18 @@ public class KullaniciController implements KullaniciFilter {
     }
 
     @DeleteMapping("")
-    public void DeleteKullaniciByTelefonAndKullaniciAdi(@RequestBody KullaniciDTO kullaniciDto) {
+    public int DeleteKullaniciByTelefonAndKullaniciAdi(@RequestBody KullaniciDTO kullaniciDto) {
 
         Kullanici kullanici = KullaniciConverter.INSTANCE.convertKullaniciDtoToKullanici(kullaniciDto);
 
-        kullaniciService.DeleteKullaniciByTelefonAndKullaniciAdi(kullanici);
+        int deleteCount = kullaniciService.DeleteKullaniciByTelefonAndKullaniciAdi(kullanici);
+
+        if (deleteCount == 0) {
+            throw new KullaniciException(kullanici.getKullaniciadi() + " Kullanıcı adı ile " + kullanici.getTelefon()
+                    + " telefonu bilgileri uyuşmamaktadır.");
+        }
+
+        return deleteCount;
 
     }
 
@@ -63,8 +70,8 @@ public class KullaniciController implements KullaniciFilter {
 
         Kullanici findKullanici = kullaniciService.GetKullaniciByKullaniciAdi(kullanici.getKullaniciadi());
 
-        if (findKullanici == null){
-            throw new KullaniciException("User not found with given kullaniciAdi: " + kullanici.getKullaniciadi());
+        if (findKullanici == null) {
+            throw new KullaniciException("Kullanıcı adı ile kullanıcı bulunamadı: " + kullanici.getKullaniciadi());
         }
 
         kullanici.setId(findKullanici.getId());
@@ -102,7 +109,7 @@ public class KullaniciController implements KullaniciFilter {
         Kullanici kullanici = kullaniciService.GetKullaniciByKullaniciAdi(kullaniciadi);
 
         if (kullanici == null) {
-            throw new KullaniciException("Kullanici not found with given kullanici adi : " + kullaniciadi);
+            throw new KullaniciException("Kullanıcı adı ile kullanıcı bulunamadı : " + kullaniciadi);
         }
 
         String filterName = "KullaniciFilter";
@@ -120,7 +127,7 @@ public class KullaniciController implements KullaniciFilter {
         Kullanici kullanici = kullaniciService.GetKullaniciByKullaniciTelefon(telefon);
 
         if (kullanici == null) {
-            throw new KullaniciException("Kullanici not found with given telefon : " + telefon);
+            throw new KullaniciException("Telefon ile kullanıcı bulunamadı : " + telefon);
         }
 
         String filterName = "KullaniciFilter";

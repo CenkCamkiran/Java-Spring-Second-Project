@@ -2,19 +2,18 @@ package com.secondhomework.cenkcamkiran.DTO;
 
 public class KullaniciDTO {
 
-    private Long id;
     private String adi;
     private String soyadi;
     private String email;
     private String telefon;
     private String kullaniciadi;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public KullaniciDTO(String adi, String soyadi, String email, String telefon, String kullaniciadi) {
+        this.adi = adi;
+        this.soyadi = soyadi;
+        this.email = email;
+        this.telefon = telefon;
+        this.kullaniciadi = kullaniciadi;
     }
 
     public String getAdi() {
@@ -54,15 +53,6 @@ public class KullaniciDTO {
     }
 
     public void setKullaniciadi(String kullaniciadi) {
-        this.kullaniciadi = kullaniciadi;
-    }
-
-    public KullaniciDTO(Long id, String adi, String soyadi, String email, String telefon, String kullaniciadi) {
-        this.id = id;
-        this.adi = adi;
-        this.soyadi = soyadi;
-        this.email = email;
-        this.telefon = telefon;
         this.kullaniciadi = kullaniciadi;
     }
 

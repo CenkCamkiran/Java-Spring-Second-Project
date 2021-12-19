@@ -2,12 +2,11 @@ package com.secondhomework.cenkcamkiran.services;
 
 import java.util.List;
 
-import com.secondhomework.cenkcamkiran.DTO.KullaniciYorumDTO;
-import com.secondhomework.cenkcamkiran.entities.UrunYorum;
-import com.secondhomework.cenkcamkiran.repository.YorumRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.secondhomework.cenkcamkiran.entities.UrunYorum;
+import com.secondhomework.cenkcamkiran.repository.YorumRepository;
 
 @Service
 public class YorumService {
@@ -15,9 +14,14 @@ public class YorumService {
     @Autowired
     private YorumRepository yorumRepository;
 
-    public List<KullaniciYorumDTO> findYorumByKullaniciAdi(String kullaniciAdi) {
+    public List<UrunYorum> findYorumlarByUrunId(Long id) {
 
-        return yorumRepository.findYorumByKullaniciAdi(kullaniciAdi);
+        return yorumRepository.findYorumlarByUrunId(id);
+    }
+
+    public List<UrunYorum> findYorumlarByKullaniciAdi(Long kullaniciID) {
+
+        return yorumRepository.findYorumlarByKullaniciAdi(kullaniciID);
     }
 
     public void deleteYorumByID(Long id) {
