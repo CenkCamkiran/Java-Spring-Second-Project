@@ -87,6 +87,7 @@ public class YorumController implements YorumFilter {
     @PostMapping("")
     public ResponseEntity<Object> SaveNewYorum(@RequestBody YorumDTO yorumDTO) {
 
+        //
         UrunYorum urunYorum = YorumConverter.INSTANCE.convertYorumDtoToYorum(yorumDTO);
 
         urunYorum = yorumService.saveYorum(urunYorum);
